@@ -1,16 +1,16 @@
-const HtmlWebpackPlugin = require ('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 // la configuracion de webpack tiene que exportar un objeto
 module.exports = {
   output: {
     filename: 'app.bundle.js'
   },
-	// Plugins que vamos a utilizar y siempre va en array
-	plugins: [
-		new HtmlWebpackPlugin({
+  // Plugins que vamos a utilizar y siempre va en array
+  plugins: [
+    new HtmlWebpackPlugin({
       template: 'src/index.html'
     }) // Asi utilizarmos la instacia del plugin
-	],
+  ],
   module: {
     rules: [ // reglas que tendran los modulos
       {
