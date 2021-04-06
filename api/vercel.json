@@ -1,7 +1,7 @@
 {
   "version": 2,
   "name": "petgram-server-christian",
-  "alias": ["petgram-api"],
+  "alias": ["petgram-api-christian"],
   "builds": [{ "src": "index.js", "use": "@now/node" }],
   "routes": [{
     "headers": {
