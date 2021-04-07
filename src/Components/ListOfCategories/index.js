@@ -2,17 +2,28 @@ import React, { useState, useEffect } from 'react'
 import { Category } from '../Category'
 import { List, Item } from './styles'
 
-export const ListOfCategories = () => {
+function useCategoriesData () { // un Hook tiene que devolver algo
   const [categories, setCategories] = useState([]) // array vacio -> ya damos por hecho que es un array
-  const [showFixed, setShowFixed] = useState(false) // estado para saber si esta fijo
+
+  const [loading, setLoading] = useState(false)
 
   useEffect(function () {
+    setLoading(true)
     window.fetch('https://petgram-server-christian-christianvilca.vercel.app/categories')
       .then(res => res.json())
       .then(response => { // respuesta con las categorias
         setCategories(response) // la respuesta se guarda en categories
+        setLoading(false)
       })
   }, [])
+
+  return { categories, loading }
+}
+
+export const ListOfCategories = () => {
+  const { categories, loading } = useCategoriesData()
+
+  const [showFixed, setShowFixed] = useState(false) // estado para saber si esta fijo
 
   useEffect(function () { // se ejecuta la funcion cada vez que se renderiza el componente
     const onScroll = e => { // recive el evento del scroll
@@ -26,13 +37,15 @@ export const ListOfCategories = () => {
   }, [showFixed])
 
   const renderList = (fixed) => (
-    <List className={fixed ? 'fixed' : ''}>
+    <List fixed={fixed}>
       {
-        categories.map((category) => (
-          <Item key={category.id}>
-            <Category {...category} />
-          </Item>
-        ))
+        loading
+          ? <Item key={loading}><Category /></Item>
+          : categories.map((category) => (
+            <Item key={category.id}>
+              <Category {...category} />
+            </Item>
+          ))
       }
     </List>
   )
