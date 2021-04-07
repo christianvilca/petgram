@@ -1,12 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Article, ImgWrapper, Img, Button } from './styles'
-import { MdFavoriteBorder } from 'react-icons/md'
+import { MdFavoriteBorder, MdFavorite } from 'react-icons/md'
 
 const DEFAULT_IMAGE = 'https://res.cloudinary.com/midudev/image/upload/w_300/q_80/v1560262103/dogs.png'
 
 export const PhotoCard = ({ id, likes = 0, src = DEFAULT_IMAGE }) => {
   const ref = useRef(null)
   const [show, setShow] = useState(false)
+
+  const key = `like-${id}`
+  // funcion devuelve el valor que deseamos que este como valor inicial
+  const [liked, setLiked] = useState(() => {
+    try {
+      const like = window.localStorage.getItem(key)
+      return like
+    } catch (error) {
+      return false
+    }
+  })
 
   useEffect(function () { // si cada elemento esta en el viewport del usuario
     // lo queremos envolver en una promesa y cargar solo cuando lo necesitemos el polyfill
@@ -32,6 +43,17 @@ export const PhotoCard = ({ id, likes = 0, src = DEFAULT_IMAGE }) => {
 
   // if (!show) return null // Si usamos esto nos dice que necesariamente tenemos que pasa el elemeto que tiene el ref
 
+  const Icon = liked ? MdFavorite : MdFavoriteBorder
+
+  const setLocalStorage = value => {
+    try { // si es que el navegador tiene la navegacion privada activada no se puede acceder a window.localStorage o ya esta lleno
+      window.localStorage.setItem(key, value)
+      setLiked(value)
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
   return (
     <Article ref={ref}>
       {
@@ -42,8 +64,8 @@ export const PhotoCard = ({ id, likes = 0, src = DEFAULT_IMAGE }) => {
                 <Img src={src} />
               </ImgWrapper>
             </a>
-            <Button>
-              <MdFavoriteBorder size='32px' /> {likes} likes!
+            <Button onClick={() => setLocalStorage(!liked) /* () => setLiked(!liked) */}>
+              <Icon size='32px' /> {likes} likes!
             </Button>
           </>
       }
