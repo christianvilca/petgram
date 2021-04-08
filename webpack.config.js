@@ -5,6 +5,8 @@ module.exports = {
   output: {
     filename: 'app.bundle.js'
   },
+  mode: 'development',
+  devtool: 'inline-source-map',
   // Plugins que vamos a utilizar y siempre va en array
   plugins: [
     new HtmlWebpackPlugin({
