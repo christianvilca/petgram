@@ -3,7 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 // la configuracion de webpack tiene que exportar un objeto
 module.exports = {
   output: {
-    filename: 'app.bundle.js'
+    filename: 'app.bundle.js',
+    publicPath: '/' // en donde buscar el app.bundle.js
   },
   mode: 'development',
   devtool: 'inline-source-map',
