@@ -1,8 +1,7 @@
 import { graphql } from 'react-apollo'
 import { gql } from 'apollo-boost'
 
-// Nos permite envolver el componente y recuperar esa informacion (Patron HOC)
-export const withPhotos = graphql(gql`
+const GET_PHOTOS = gql`
 query getPhotos($categoryId: ID) {
   photos(categoryId: $categoryId) {
     id
@@ -13,4 +12,7 @@ query getPhotos($categoryId: ID) {
     liked
   }
 }
-`)
+`
+
+// Nos permite envolver el componente y recuperar esa informacion (Patron HOC)
+export const withPhotos = graphql(GET_PHOTOS)
