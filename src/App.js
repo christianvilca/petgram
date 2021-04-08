@@ -8,7 +8,6 @@ import { PhotoCardWithQuery } from './container/PhotoCardWithQuery'
 export const App = () => {
   const urlParams = new window.URLSearchParams(window.location.search) // Query string de la barra de direcciones
   const detailId = urlParams.get('detail')
-  console.log(detailId)
 
   return (
     <div>
