@@ -28,3 +28,10 @@ export const Title = styled.h2`
   font-weight: 500;
   padding: 8px;
 `
+
+export const Error = styled.span`
+  color: red;
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px;
+`
