@@ -7,7 +7,23 @@ import Context from './Context'
 import { App } from './App'
 
 const client = new ApolloClient({
-  uri: 'https://petgram-server-christian-christianvilca.vercel.app/graphql'
+  uri: 'https://petgram-server-christian-christianvilca.vercel.app/graphql',
+  request: operation => { // se ejecita justo antes de hace cualquier peticion al servidor
+    const token = window.sessionStorage.getItem('token')
+    const authorization = token ? `Bearer ${token}` : ''
+    operation.setContext({
+      headers: {
+        authorization
+      }
+    })
+  },
+  onError: error => {
+    const { networkError } = error
+    if (networkError && networkError.result.code === 'invalid_token') {
+      window.sessionStorage.removeItem('token')
+      window.location.href = '/'
+    }
+  }
 })
 
 ReactDom.render(
