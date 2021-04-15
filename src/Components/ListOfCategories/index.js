@@ -20,7 +20,7 @@ function useCategoriesData () { // un Hook tiene que devolver algo
   return { categories, loading }
 }
 
-export const ListOfCategories = () => {
+const ListOfCategoriesComponent = () => {
   const { categories, loading } = useCategoriesData()
 
   const [showFixed, setShowFixed] = useState(false) // estado para saber si esta fijo
@@ -57,3 +57,6 @@ export const ListOfCategories = () => {
     </>
   )
 }
+
+// No quiero que te vuelvas a renderizar si las props que recibas no son diferentes
+export const ListOfCategories = React.memo(ListOfCategoriesComponent)
