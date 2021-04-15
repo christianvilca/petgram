@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const WebpackPwaManifestPlugin = require('webpack-pwa-manifest')
+const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
 const path = require('path')
 
 // la configuracion de webpack tiene que exportar un objeto
@@ -24,8 +25,32 @@ module.exports = {
       icons: [
         {
           src: path.resolve('src/assets/icon.png'),
-          sizes: [96, 128, 192, 256, 384, 512],
-          purpose: 'maskable'
+          sizes: [96, 128, 192, 256, 384, 512]
+          // purpose: 'maskable'
+        }
+      ]
+    }),
+    new WorkboxWebpackPlugin.GenerateSW({
+      swDest: 'service-worker.js',
+      clientsClaim: true,
+      skipWaiting: true,
+      maximumFileSizeToCacheInBytes: 5000000,
+      runtimeCaching: [ // Lo que va hacer catch
+        {
+          // donde cargamos las imagenes
+          urlPattern: new RegExp('https://(res.cloudinary.com|images.unsplash.com)'),
+          handler: 'CacheFirst', // mira si el recurso esta en la cache antes de mirar en la red
+          options: {
+            cacheName: 'images' // nombre de la cache
+          }
+        },
+        {
+          // donde cargamos las imagenes
+          urlPattern: new RegExp('https://petgram-christian.vercel.app'),
+          handler: 'NetworkFirst', // mirar primero en la red
+          options: {
+            cacheName: 'api' // nombre de la cache
+          }
         }
       ]
     })

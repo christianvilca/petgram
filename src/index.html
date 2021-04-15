@@ -12,5 +12,18 @@
   <noscript>
     <h3>Esta app necesita Javascript para anunciar</h3>
   </noscript>
+  <script>
+    if ('serviceWorker' in navigator) { // si el navegador es compatible con los serviceWorker
+      window.addEventListener('load', function() { // Cuando se carge la pagina ejecutar la funcion
+        navigator.serviceWorker.register('/service-worker.js') // registrar el serviceWorker
+        .then(registration =>{
+          console.log('SW registrado')
+        })
+        .catch(registrationError => {
+          console.log('SW error', registrationError)
+        })
+      })
+    }
+  </script>
 </body>
 </html>

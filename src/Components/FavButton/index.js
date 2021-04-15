@@ -16,5 +16,5 @@ export const FavButton = ({ liked, likes, onClick }) => {
 FavButton.propTypes = {
   liked: PropTypes.bool.isRequired,
   likes: PropTypes.number.isRequired,
-  onclick: PropTypes.func.isRequired
+  onclick: PropTypes.func
 }
