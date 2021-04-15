@@ -46,7 +46,7 @@ module.exports = {
         },
         {
           // donde cargamos las imagenes
-          urlPattern: new RegExp('https://petgram-christian.vercel.app'),
+          urlPattern: new RegExp('https://petgram-christian-christianvilca.vercel.app/'),
           handler: 'NetworkFirst', // mirar primero en la red
           options: {
             cacheName: 'api' // nombre de la cache
